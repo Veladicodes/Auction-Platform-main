@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction Listings</title>
+    <link rel="stylesheet" href="/css/auction-listings.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="auction-listings.html">Auctions</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>Auction Listings</h1>
+        <div class="search-container">
+            <select id="filter" class="filter-dropdown">
+                <option value="all">All Categories</option>
+                <option value="art">Art</option>
+                <option value="electronics">Electronics</option>
+                <option value="furniture">Furniture</option>
+                <option value="collectibles">Collectibles</option>
+                <option value="other">Other</option>
+            </select>
+            <input type="text" id="search" placeholder="Search for auction items...">
+            <img src="/images/search.png" alt="Search" id="search-button" class="search-image">
+        </div>
+        <div class="auction-container" id="auction-container">
+        </div>
+    </main>
+
+    <script src="/js/auction-fetch.js"></script>
+    <script>
+        window.onload = async () => {
+            try {
+                const response = await fetch('/auth/session');
+
+                if(!response.ok) {
+                    alert('You must be logged in to access this feaature...');
+                    window.location.href = 'loginAndRegister.html';
+                }
+            } catch (err) {
+                console.error('Failed to verify session.')
+                window.location.href = 'loginAndRegister.html';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchAuctions("all");
+        })
+    </script>
+
+    <footer>
+        <p>&copy; 2025 Auction Platform. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="auction-listings.html">Auctions</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="login-container">
+            <h2>Login</h2>
+            <form class="auction-login">
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <div class="error-message" id="error-message-username" style="color: red; display: none;"></div>
+                </div>
+                <div>
+                    
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <div class="error-message" id="error-message-password" style="color: red; display: none;"></div>
+                </div>
+                <button type="submit">Login</button>
+                <p class="register-redirect">Don't have an account? <a href="register.html">Register</a></p>
+            </form>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Auction Platform. All rights reserved.</p>
+    </footer>
+</body>
+<script>
+    function validateCredentials() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorMessageUsername = document.getElementById('error-message-username');
+        const errorMessagePassword = document.getElementById('error-message-password');
+
+        function showErrorMessage(id, message) {
+            const errorElement = document.getElementById(id);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function hideErrorMessage(id) {
+            const errorElement = document.getElementById(id);
+            errorElement.style.display = 'none';
+            errorElement.textContent = '';
+        }
+
+        hideErrorMessage('error-message-username');
+        hideErrorMessage('error-message-password');
+
+
+        const usernameRegex = /^[a-zA-Z0-9-_]+$/;
+        if (!usernameRegex.test(username)) {
+            showErrorMessage('error-message-username', 'Username can only contain letters, numbers, hyphens (-), and underscores (_).');
+            return false;
+        }
+
+        if (password.length < 6) {
+            showErrorMessage('error-message-password', 'Password must be at least 6 characters long.');
+            return false;
+        }
+
+        return true;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelector('.auction-login').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if (validateCredentials()) {
+                alert("Login successful!");
+                window.location.href = "home.html";
+            }
+        });
+    });
+</script>
+
+
+</html>

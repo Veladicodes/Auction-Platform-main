@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New Product</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/seller.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="auction-listings.html">Auctions</a></li>
+        <li><a href="help.html">Help</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <div class="product-form-container">
+    <h2>Add New Product</h2>
+    <form id="productForm" method="post" action="/proDet" enctype="multipart/form-data">
+      <div>
+        <label for="product-id">Product ID:</label>
+        <input type="text" id="product-id" name="product-id" required>
+        <div class="error-message" id="product-id-error"></div>
+      </div>
+      <div>
+        <label for="seller-id">seller-id</label>
+        <input type="text" id="seller-id" name="seller-id" placeholder="autofilled">
+      </div>
+      <div>
+        <label for="catogary">Catogary </label>
+        <select id="catogary" name="catogary">
+          <option value="Electronics">Electronics</option>
+          <option value="Art">Art</option>
+          <option value="Antique">Antique</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Jewellery">Jewellery</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="img">image: </label> <input type="text" id="img" name="img" placeholder="Enter image URL">
+        <div class="error-message" id="category-error"></div>
+      </div>
+      <div>
+        <label for="name">Product Title:</label>
+        <input type="text" id="name" name="name" required>
+        <div class="error-message" id="name-error"></div>
+      </div>
+      <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required>
+        <div class="error-message" id="price-error"></div>
+      </div>
+      <div>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="5" required></textarea>
+        <div class="error-message" id="description-error"></div>
+      </div>
+      <div>
+        <label for="start-time">Start Time of Bid:</label>
+        <input type="datetime-local" id="start-time" name="start-time" required>
+        <div class="error-message" id="start-time-error"></div>
+      </div>
+      <div>
+        <label for="end-time">End Time of Bid:</label>
+        <input type="datetime-local" id="end-time" name="end-time" required>
+        <div class="error-message" id="end-time-error"></div>
+      </div>
+      <button type="submit">Add Product</button>
+    </form>
+  </div>
+  
+  <footer>
+    <p>&copy; 2025 Auction Platform. All rights reserved.</p>
+  </footer>
+  <script src="/js/productSeller.js"></script>
+  <script src="/js/sample.js"></script>
+  <script>
+    function getLocalDateTimePlusMinutes(minutesOffset) {
+      const now = new Date();
+      now.setMinutes(now.getMinutes() + minutesOffset);
+      const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+      return localTime.toISOString().slice(0, 16);
+    }
+
+    function validateProduct() {
+      const productId = document.getElementById('product-id').value.trim();
+      const name = document.getElementById('name').value.trim();
+      const price = document.getElementById('price').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const startTime = document.getElementById('start-time').value;
+      const endTime = document.getElementById('end-time').value;
+
+      function showErrorMessage(id, message) {
+        const errorElement = document.getElementById(id);
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+      }
+
+      function hideErrorMessage(id) {
+        const errorElement = document.getElementById(id);
+        errorElement.style.display = 'none';
+        errorElement.textContent = '';
+      }
+
+      hideErrorMessage('product-id-error');
+      hideErrorMessage('name-error');
+      hideErrorMessage('price-error');
+      hideErrorMessage('description-error');
+      hideErrorMessage('start-time-error');
+      hideErrorMessage('end-time-error');
+  
+      const productIdRegex = /^[A-Za-z0-9-_]+$/;
+      if (!productIdRegex.test(productId)) {
+          showErrorMessage('product-id-error', 'Product ID can only contain letters, numbers, hyphens, and underscores.');
+          return false;
+      }
+  
+      const nameRegex = /^[A-Za-z0-9\s\-]+$/;
+      if (!nameRegex.test(name)) {
+          showErrorMessage('name-error', 'Product title can only contain letters, numbers, spaces, and hyphens.');
+          return false;
+      }
+  
+      if (price <= 0 || isNaN(price)) {
+          showErrorMessage('price-error', 'Price must be a positive number.');
+          return false;
+      }
+  
+      if (description.length < 10) {
+          showErrorMessage('description-error', 'Description must be at least 10 characters long.');
+          return false;
+      }
+  
+      if (new Date(startTime) >= new Date(endTime)) {
+          showErrorMessage('end-time-error', 'End time must be later than start time.');
+          return false;
+      }
+  
+      return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+      if (isLoggedIn) {
+        const startTimeInput = document.getElementById('start-time');
+        const endTimeInput = document.getElementById('end-time');
+        const productForm = document.getElementById('productForm');
+
+        startTimeInput.min = getLocalDateTimePlusMinutes(5);
+        startTimeInput.addEventListener('change', () => {
+          if (startTimeInput.value) {
+            endTimeInput.min = startTimeInput.value;
+          }
+        });
+
+        productForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          if (validateProduct()) {
+            productForm.submit();
+          }
+        });
+      } else {
+        alert('You must be logged in to view this page...');
+        window.location.href = 'loginAndRegister.html';
+      }
+    });
+  </script>
+</body>
+</html>

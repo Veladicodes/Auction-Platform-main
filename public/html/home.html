@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>Auction Platform</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Auction Platform</h1>
+        <i id="profile-icon" class="fa-solid fa-user"></i>
+    </header>
+    <main>
+        <section>
+            <div class="menu-container">
+                <a href="loginAndRegister.html" class="menu-item"><label class="menu-item-header">Login or Register</label>
+                    <img class="menu-item-image" src="/images/login.jpg"></a>
+                <a href="auction-listings.html" class="menu-item"><label class="menu-item-header">Auctions</label>
+                    <img class="menu-item-image" src="/images/auction-copy.jpg"></a>
+                <a href="help.html" class="menu-item"><label class="menu-item-header">Help</label>
+                    <img class="menu-item-image" src="/images/help-copy.jpg"></a>
+                <a href="seller.html" class="menu-item"><label class="menu-item-header">Sell</label>
+                    <img class="menu-item-image" src="/images/sale.jpg"></a>
+            </div>
+        </section>
+
+        <section>
+            <h2>Featured Auctions</h2>
+            <div id="auction-container" class="auction-container">
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Auction Platform. All rights reserved.</p>
+    </footer>
+    <script src="https://kit.fontawesome.com/10e51ef5e7.js" crossorigin="anonymous"></script>
+    <script src="/js/auction-fetch.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchAuctions("featured");
+
+            const profileIcon = document.getElementById("profile-icon");
+            profileIcon.addEventListener('click', async () => {
+                try {
+                    const res = await fetch('/auth/session');
+                    if (!res.ok) {
+                        alert('Please Login to view profile..')
+                        window.location.href = 'loginAndRegister.html';
+                    } else {
+                        window.location.href = '/auth/profile';
+                    }
+                } catch (err) {
+                    console.error('Error opening profile: ' + err);
+                    alert('Something Went Wrong Please try again later...')
+                }
+                
+                
+            })
+        });
+    </script>
+</body>
+</html>

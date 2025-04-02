@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Profile</title>
+      <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body>
+      <h1><%= user.name %>'s Profile</h1> 
+      
+      <div id="container">
+          <div id="sold">
+              <h2>Sold Products</h2>
+              <% if (soldProduct && soldProduct.length > 0) { %>
+                  <% soldProduct.forEach(function(product) { %>
+                      <div class="product">
+                          <img src="<%= product.img %>" alt="<%= product.title || product.name %>">
+                          <h3 class="name"><%= product.title || product.name %></h3>
+                          <p>Price: <%= product.price %></p>
+                          <p>Sold Price: <%= product.maxamount ? product.maxamount : "N/A" %></p>
+                      </div>
+                  <% }); %>
+              <% } else { %>
+                  <p class="noProduct">No Product Sold</p>
+              <% } %>
+          </div>
+          
+          <div class="Bids">
+              <h2>Active Auctions</h2>
+              <% if (auction && auction.length > 0) { %>
+                  <% auction.forEach(function(myBid) { %>
+                      <div class="myBids">
+                          <h3 class="bid"><%= myBid.title %></h3>
+                          <img src="<%= myBid.img %>" alt="<%= myBid.title %>">
+                          <p class="price">Starting Price: <%= myBid.price %></p>
+                          <p class="maxBid">Highest Bid: <%= myBid.maxamount ? myBid.maxamount : "No bids yet" %></p>
+                          <p class="endingTime">Ends at: <%= myBid.end_time ? myBid.end_time.toLocaleString() : "N/A" %></p>
+                      </div>
+                  <% }); %>
+              <% } else { %>
+                  <p class="NoBids">No active Auctions</p>
+              <% } %>
+          </div>
+
+          <div class="Bought">
+            <h2>Dead Auctions</h2>
+            <% if (Deadauction && Deadauction.length > 0) { %>
+                <% Deadauction.forEach(function(dead) { %>
+                    <div class="myBought">
+                        <h3 class="bought"><%= dead.title %></h3>
+                        <img src="<%= dead.img %>" alt="<%= dead.title %>">
+                        <p class="price">Price: <%= dead.price %></p>
+                        <p class="final">Final Bid: <%= dead.maxamount ? dead.maxamount : "No bids" %></p>
+                        <p class="btn"><button type="submit" id="btn" onclick="window.location.href='payment.ejs'">Payment</button></p>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p class="noBuys">No item Bought</p>
+            <% } %>
+          </div>
+      </div>
+  </body>
+</html>

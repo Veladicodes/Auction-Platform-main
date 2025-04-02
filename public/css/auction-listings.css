@@ -1,0 +1,136 @@
+.search-container{
+    display: flex;
+    max-width: 80%;
+}
+
+.search-container input{
+    width: 60%;
+    height: 30px;
+    background-color: #d6f8d7;
+    border-radius: 5px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.search-container img{
+    padding: 40px 30px;
+    width: auto;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.filter-dropdown{
+    height: 35px;
+    width: auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: #d6f8d7;
+}
+
+.search-container img:hover{
+    transform: scale(1.4);
+}
+
+
+.auction-container {
+    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-left: 30px;
+    align-content: center;
+}
+
+.auction-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 29%;
+    min-width: 200px;
+    max-height: 700px;
+    background-color: #ffffff;
+    border: 1px solid #c8e6c9;
+    border-radius: 5px;
+    margin: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.auction-item-title{
+    text-decoration: no;
+    width: 100%;
+    display: block;
+    background-color: #4caf50;
+    color: white;
+    text-align: center;
+    margin: 0;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.auction-item:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+}
+
+.auction-item img {
+    max-width: 70%;
+    max-height: 70%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.auction-item img:hover{
+    cursor: pointer;
+    transform: scale(1.3);
+}
+
+.view-details-btn {
+    background-color: #4caf50;
+    color: white;
+    font-size: medium;
+    border: #388e3c solid 1px;
+    width: 30%;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 45px;
+    margin-top: 45px;
+    transition: transform 0.5s ease;
+    margin : 20px 20px
+}
+
+.view-details-btn:hover {
+    transform: scale(1.05) translateY(-10px);
+    background-color: #388e3c;
+    border-radius: 45px;
+}
+
+
+.placebid {
+    background-color: #4caf50;
+    color: white;
+    font-size: medium;
+    border: #388e3c solid 1px;
+    width: 30%;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 45px;
+    margin-top: 45px;
+    transition: transform 0.5s ease;
+}
+
+.placebid:hover {
+    transform: scale(1.05) translateY(-10px);
+    background-color: #388e3c;
+    border-radius: 45px;
+}
+
